@@ -17,12 +17,16 @@ async def get_csv_data():
         created_dates.append(row[3])
 
     # dictionary of lists
-    _dict = {'id': ids, 'calcul': calculs, 'result': results,
-             'created_date': created_dates}
+    _dict = {
+        "id": ids,
+        "calcul": calculs,
+        "result": results,
+        "created_date": created_dates,
+    }
 
     df = pd.DataFrame(_dict)
     return StreamingResponse(
         iter([df.to_csv(index=False)]),
         media_type="text/csv",
-        headers={"Content-Disposition": f"attachment; filename=data.csv"}
+        headers={"Content-Disposition": "attachment; filename=data.csv"},
     )

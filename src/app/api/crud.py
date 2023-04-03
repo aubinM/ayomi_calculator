@@ -7,9 +7,9 @@ from app.api.functions import eval_polish_expr
 async def post(payload: CalculatorSchema):
     created_date = dt.now().strftime("%Y-%m-%d %H:%M")
     result = eval_polish_expr(payload.calcul)
-    query = calculator.insert().values(calcul=payload.calcul,
-                                       result=result,
-                                       created_date=created_date)
+    query = calculator.insert().values(
+        calcul=payload.calcul, result=result, created_date=created_date
+    )
     return await database.execute(query=query)
 
 
@@ -26,10 +26,11 @@ async def get_all():
 async def put(id: int, payload=CalculatorSchema):
     created_date = dt.now().strftime("%Y-%m-%d %H:%M")
     query = (
-        calculator.update().where(id == calculator.c.id).values(
-            calcul=payload.calcul,
-            result=payload.result,
-            created_date=created_date)
+        calculator.update()
+        .where(id == calculator.c.id)
+        .values(calcul=payload.calcul,
+                result=payload.result,
+                created_date=created_date)
         .returning(calculator.c.id)
     )
     return await database.execute(query=query)

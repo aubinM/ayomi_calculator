@@ -1,7 +1,7 @@
 from app.api import crud
 from app.api.models import CalculatorDB, CalculatorSchema
 from fastapi import APIRouter, HTTPException, Path
-from typing import List 
+from typing import List
 from datetime import datetime as dt
 from app.api.functions import eval_polish_expr
 
@@ -25,7 +25,9 @@ async def create_calculator(payload: CalculatorSchema):
 
 
 @router.get("/{id}/", response_model=CalculatorDB)
-async def read_calculator(id: int = Path(..., gt=0),):
+async def read_calculator(
+    id: int = Path(..., gt=0),
+):
     calculator = await crud.get(id)
     if not calculator:
         raise HTTPException(status_code=404, detail="Calculator not found")
@@ -37,9 +39,9 @@ async def read_all_calculators():
     return await crud.get_all()
 
 
-#DELETE route
+# DELETE route
 @router.delete("/{id}/", response_model=CalculatorDB)
-async def delete_calculator(id:int = Path(...,gt=0)):
+async def delete_calculator(id: int = Path(..., gt=0)):
     calculator = await crud.get(id)
     if not calculator:
         raise HTTPException(status_code=404, detail="Calculator not found")

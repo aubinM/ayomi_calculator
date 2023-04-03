@@ -4,7 +4,7 @@ ops = {
     "+": (lambda a, b: a + b),
     "-": (lambda a, b: a - b),
     "*": (lambda a, b: a * b),
-    "/": (lambda a, b: a / b)
+    "/": (lambda a, b: a / b),
 }
 
 
@@ -22,9 +22,10 @@ def eval_polish_expr(expression):
             try:
                 stack.append(int(token))
             except ValueError:
-                raise HTTPException(status_code=400,
-                                    detail=
-                                    'Error: only real numbers or %s.' % ''.join(
-                                     ops.keys()))
+                raise HTTPException(
+                    status_code=400,
+                    detail="Error: only real numbers or %s." % ""
+                    .join(ops.keys()),
+                )
 
     return stack.pop()
