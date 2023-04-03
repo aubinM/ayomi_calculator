@@ -5,6 +5,13 @@ from app.api.functions import eval_polish_expr
 
 
 async def post(payload: CalculatorSchema):
+    """
+    Post a calculator
+
+    Args:
+        payload (CalculatorSchema) :
+
+    """
     created_date = dt.now().strftime("%Y-%m-%d %H:%M")
     result = eval_polish_expr(payload.calcul)
     query = calculator.insert().values(
@@ -14,16 +21,34 @@ async def post(payload: CalculatorSchema):
 
 
 async def get(id: int):
+    """
+    Get a calculator by its id
+
+    Args:
+        id (int) :
+
+    """
     query = calculator.select().where(id == calculator.c.id)
     return await database.fetch_one(query=query)
 
 
 async def get_all():
+    """
+    Fetch data from database.resul
+    """
     query = calculator.select()
     return await database.fetch_all(query=query)
 
 
 async def put(id: int, payload=CalculatorSchema):
+    """
+    Update a calculator.
+
+    Args:
+        id (int) :
+        payload : Defaults to CalculatorSchema
+
+    """
     created_date = dt.now().strftime("%Y-%m-%d %H:%M")
     query = (
         calculator.update()
@@ -37,5 +62,12 @@ async def put(id: int, payload=CalculatorSchema):
 
 
 async def delete(id: int):
+    """
+    Delete a calculator.
+
+    Args:
+        id (int) :
+
+    """
     query = calculator.delete().where(id == calculator.c.id)
     return await database.execute(query=query)

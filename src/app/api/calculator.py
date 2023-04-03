@@ -10,6 +10,13 @@ router = APIRouter()
 
 @router.post("/", response_model=CalculatorDB, status_code=201)
 async def create_calculator(payload: CalculatorSchema):
+    """
+    Create a calculator.
+
+    Args:
+        payload (CalculatorSchema) :
+
+    """
     calculator_id = await crud.post(payload)
     created_date = dt.now().strftime("%Y-%m-%d %H:%M")
 
@@ -28,6 +35,13 @@ async def create_calculator(payload: CalculatorSchema):
 async def read_calculator(
     id: int = Path(..., gt=0),
 ):
+    """
+    Get a calculator.
+
+    Args:
+        id (int) : Defaults to Path(..., gt=0)
+
+    """
     calculator = await crud.get(id)
     if not calculator:
         raise HTTPException(status_code=404, detail="Calculator not found")
@@ -36,12 +50,21 @@ async def read_calculator(
 
 @router.get("/", response_model=List[CalculatorDB])
 async def read_all_calculators():
+    """
+    Reads all the calculators from crud.resul
+    """
     return await crud.get_all()
 
 
-# DELETE route
 @router.delete("/{id}/", response_model=CalculatorDB)
 async def delete_calculator(id: int = Path(..., gt=0)):
+    """
+    Delete a calculator by id
+
+    Args:
+        id (int) : Defaults to Path(..., gt=0)
+
+    """
     calculator = await crud.get(id)
     if not calculator:
         raise HTTPException(status_code=404, detail="Calculator not found")

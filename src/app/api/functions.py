@@ -8,7 +8,14 @@ ops = {
 }
 
 
-def eval_polish_expr(expression):
+def eval_polish_expr(expression: str):
+    """
+    Evaluate an polish inverted expression.
+
+    Args:
+        expression : str
+
+    """
     tokens = expression.split()
     stack = []
 

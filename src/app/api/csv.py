@@ -8,6 +8,9 @@ router = APIRouter()
 
 @router.get("/csv", tags=["csv"])
 async def get_csv_data():
+    """
+    Get data from CRUD.resul
+    """
     datas = await crud.get_all()
     ids, calculs, results, created_dates = ([] for i in range(4))
     for row in datas:
